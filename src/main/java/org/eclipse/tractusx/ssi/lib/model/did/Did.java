@@ -41,7 +41,7 @@ public class Did {
   }
 
   public Did(DidMethod method, DidMethodIdentifier didMethodIdentifier) {
-    new Did(method, didMethodIdentifier, null);
+    this(method, didMethodIdentifier, null);
   }
 
   public Did excludeFragment() {
