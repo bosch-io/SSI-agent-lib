@@ -72,8 +72,8 @@ public class LinkedDataTransformer {
 
     var documentLoader = RemoteDocumentLoader.getInstance();
     documentLoader.setEnableHttps(true);
+    documentLoader.setHttpsContexts(jsonLdObject.getContext());
     documentLoader.setEnableFile(true);
-    documentLoader.setHttpContexts(jsonLdObject.getContext());
 
     JsonLdOptions options = new JsonLdOptions();
     options.setDocumentLoader(documentLoader);
