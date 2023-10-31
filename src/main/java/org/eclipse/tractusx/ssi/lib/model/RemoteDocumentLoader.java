@@ -63,6 +63,7 @@ public class RemoteDocumentLoader implements DocumentLoader {
   @Getter @Setter private List<URI> fileContexts = new ArrayList<URI>();
 
   public static final RemoteDocumentLoader DOCUMENT_LOADER;
+  static final Logger LOG = Logger.getLogger(RemoteDocumentLoader.class.getName());
 
   static {
     DOCUMENT_LOADER = new RemoteDocumentLoader();
@@ -102,7 +103,14 @@ public class RemoteDocumentLoader implements DocumentLoader {
     if (this.isEnableLocalCache() && this.getLocalCache().containsKey(url)) {
       return this.getLocalCache().get(url);
     }
+    LOG.fine("Loading document: " + url.toString());
+    LOG.info(
+        "Enabled loaders: "
+            + (this.isEnableHttp() ? "HTTP, " : "")
+            + (this.isEnableHttps() ? "HTTPS, " : "")
+            + (this.isEnableFile() ? "FILE, " : ""));
     if (this.isEnableHttp() && "http".equalsIgnoreCase(url.getScheme())) {
+      LOG.fine("Using HTTP Loader");
 
       DocumentLoader httpLoader = this.getHttpLoader();
       if (httpLoader == null) {
@@ -119,6 +127,7 @@ public class RemoteDocumentLoader implements DocumentLoader {
       return document;
     }
     if (this.isEnableHttps() && "https".equalsIgnoreCase(url.getScheme())) {
+      LOG.fine("Using HTTPS Loader");
 
       DocumentLoader httpLoader = this.getHttpLoader();
       if (httpLoader == null) {
@@ -135,6 +144,7 @@ public class RemoteDocumentLoader implements DocumentLoader {
       return document;
     }
     if (this.isEnableFile() && "file".equalsIgnoreCase(url.getScheme())) {
+      LOG.fine("Using FILE Loader");
 
       DocumentLoader fileLoader = this.getFileLoader();
       if (fileLoader == null) {
@@ -151,7 +161,7 @@ public class RemoteDocumentLoader implements DocumentLoader {
       return document;
     }
 
-    Logger.getLogger(this.getClass().getName()).warning("Cannot load context: " + url);
+    LOG.warning("Cannot load context: " + url);
     return null;
   }
 }
