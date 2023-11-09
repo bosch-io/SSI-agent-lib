@@ -37,7 +37,7 @@ public class Did {
   public Did(DidMethod method, DidMethodIdentifier didMethodIdentifier, String fragment) {
     this.method = method;
     this.methodIdentifier = didMethodIdentifier;
-    this.fragment = fragment;
+    this.fragment = (fragment == null || fragment.isBlank()) ? null : fragment;
   }
 
   public Did(DidMethod method, DidMethodIdentifier didMethodIdentifier) {

@@ -38,7 +38,7 @@ public class DidParser {
     }
     var parts = uri.toString().split("#");
     var beforeFragment = parts[0];
-    var fragment = "";
+    String fragment = null;
 
     if (parts.length > 1) {
       fragment = parts[1];
